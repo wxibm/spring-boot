@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myweb.sun.mapper.StuCMapper">
+
+    <resultMap id="BaseResultMap" type="StuC">
+        <result column="StuId" jdbcType="VARCHAR" property="StuId" />
+        <result column="StuName" jdbcType="VARCHAR" property="StuName" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `StuId`,
+        `StuName`
+    </sql>
+
+    <insert id="insert" parameterType="StuC" >
+        insert into tb_stuc (StuId,StuName)
+        values (md5(replace(uuid(),'-','')), #{StuName})
+    </insert>
+</mapper>

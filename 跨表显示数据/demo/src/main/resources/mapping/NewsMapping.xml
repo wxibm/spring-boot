@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.NewsMapper">
+
+    <resultMap id="BaseResultMap" type="News">
+        <result column="newsId" jdbcType="INTEGER" property="newsId" />
+        <result column="newsTitle" jdbcType="VARCHAR" property="newsTitle" />
+        <result column="newsContent" jdbcType="VARCHAR" property="newsContent" />
+        <result column="newsDate" jdbcType="DATE" property="newsDate" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                `newsId`,
+                `newsTitle`,
+                `newsContent`,
+                `newsDate`
+    </sql>
+
+    <select id="getList" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM tb_news
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM tb_news
+        WHERE `newsId` = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" parameterType="News">
+        INSERT INTO tb_news (`newsId`,`newsTitle`,`newsContent`, `newsDate`)
+        values (#{newsId},#{newsTitle},#{newsContent},#{newsDate})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM tb_news
+        WHERE `newsId` = #{id}
+    </delete>
+
+    <update id="update" parameterType="News">
+        UPDATE tb_news
+        <set>
+            <if test ='newsId != null'>newsId = #{newsId},</if>
+            <if test ='newsTitle != null'>newsTitle = #{newsTitle},</if>
+            <if test ='newsContent != null'>newsContent = #{newsContent},</if>
+            <if test ='newsDate != null'>newsDate = #{newsDate}</if>
+        </set>
+        WHERE `newsId` = #{newsId}
+    </update>
+</mapper>
